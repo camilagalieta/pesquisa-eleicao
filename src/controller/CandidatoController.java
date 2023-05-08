@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import dao.CandidatoDao;
@@ -31,5 +32,11 @@ public class CandidatoController {
 	public List<Candidato> listar(){
 		return CandidatoDao.getInstance().listar();
 	}
-
+	
+	public Candidato candidatoById(Integer id) throws Exception {
+		if (id == null) {
+			throw new Exception("Id do candidato é nulo!");
+		} 
+		return CandidatoDao.getInstance().candidatoById(id);		
+	}
 }

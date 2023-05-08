@@ -11,9 +11,12 @@ import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import controller.CandidatoController;
+import controller.CandidatoXPesquisaController;
+import controller.PesquisaController;
 import dao.CandidatoDao;
 import dao.PesquisaDao;
 import model.Candidato;
+import model.CandidatoXPesquisa;
 import model.Pesquisa;
 import util.ComboBoxCandidatoItem;
 import util.ComboBoxPesquisaItem;
@@ -28,9 +31,6 @@ public class RegistrarVotosUI extends JInternalFrame {
 	private JComboBox cbPesquisaSelect;
 	private JTextField txtQtdVotos;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -43,9 +43,6 @@ public class RegistrarVotosUI extends JInternalFrame {
 			}
 		});
 	}
-	/**
-	 * Create the frame.
-	 */
 	public RegistrarVotosUI() {
 		setBounds(100, 100, 435, 440);
 		
@@ -86,23 +83,43 @@ public class RegistrarVotosUI extends JInternalFrame {
 		
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				
+					Integer idCandidato = null;
+					
 				try {
 					Object selectedItemC = cbCandidato.getSelectedItem();
 					ComboBoxCandidatoItem modelItemC = (ComboBoxCandidatoItem) selectedItemC; 
-					String nomeCandidato = modelItemC.getValue();
+					idCandidato = modelItemC.getKey();
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage());
+				}
+				
+				Integer idPesquisa = null;
+				
+				try {
+					Object selectedItemP = cbPesquisa.getSelectedItem();
+					ComboBoxPesquisaItem modelItemP = (ComboBoxPesquisaItem) selectedItemP; 
+					idPesquisa = modelItemP.getKey();
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(null, ex.getMessage());
 				}
 				
 				try {
-					Object selectedItemP = cbPesquisa.getSelectedItem();
-					ComboBoxPesquisaItem modelItemP = (ComboBoxPesquisaItem) selectedItemP; 
-					String nomePesquisa = modelItemP.getValue();
-				} catch (Exception ex) {
+					String qtdVotos = txtQtdVotos.getText();
+					Integer votos = Integer.valueOf(qtdVotos);
+				
+					Candidato candidato = new CandidatoController().candidatoById(idCandidato);
+					Pesquisa pesquisa = new PesquisaController().pesquisaById(idPesquisa);
+					CandidatoXPesquisa cxp = new CandidatoXPesquisa();
+					cxp.setCandidato(candidato);
+					cxp.setPesquisa(pesquisa);
+						
+					cxp.setVotos(votos);
+					new CandidatoXPesquisaController().salvar(cxp); 
+					
+				} catch (Exception ex){
 					JOptionPane.showMessageDialog(null, ex.getMessage());
+					}
 				}
-			}
 		});
 		
 		JButton btnCancelar = new JButton("Cancelar");

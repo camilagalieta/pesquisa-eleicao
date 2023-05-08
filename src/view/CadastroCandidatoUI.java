@@ -86,14 +86,8 @@ public class CadastroCandidatoUI extends JInternalFrame {
 					}
 					dispose(); 
 				} catch (Exception esc) {
-					// esc = 'excessão' 'salvando' 'candidato'
 					JOptionPane.showMessageDialog(null, "Erro ao salvar candidato!");
 				}
-				
-				
-				
-				
-				
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());

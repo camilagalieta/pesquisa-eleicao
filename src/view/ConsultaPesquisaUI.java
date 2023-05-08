@@ -24,9 +24,6 @@ import java.awt.event.ActionEvent;
 public class ConsultaPesquisaUI extends JInternalFrame {
 	private JTable jtPesquisa;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -40,9 +37,6 @@ public class ConsultaPesquisaUI extends JInternalFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public ConsultaPesquisaUI() {
 		setTitle("Consulta Pesquisa");
 		setBounds(100, 100, 818, 500);

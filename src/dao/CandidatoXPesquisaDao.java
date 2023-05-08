@@ -25,47 +25,14 @@ public class CandidatoXPesquisaDao {
 		
 	}
 	
-	public void salvar(Pesquisa pesquisa, Candidato candidato, CandidatoXPesquisa cxp) {
-		try {
-			String sqlCandidato = "insert into candidato (nome, partido, ficha_limpa) values (?, ?, ?)";
-			PreparedStatement pstmtCandidato = con.prepareStatement(sqlCandidato, Statement.RETURN_GENERATED_KEYS);
-			pstmtCandidato.setString(1, candidato.getNome());
-			pstmtCandidato.setString(2, candidato.getPartido());
-			pstmtCandidato.setBoolean(3, candidato.getFichaLimpa());
-
-			int keyC = pstmtCandidato.executeUpdate();
-
-			String sqlPesquisa = "insert into pesquisa (instituto, data_pesquisa, local_pesquisa, media_idade, tipo_pesquisa, formato_pesquisa) values (?, ?, ?, ?, ?, ?)";
-			PreparedStatement pstmtPesquisa = con.prepareStatement(sqlPesquisa, Statement.RETURN_GENERATED_KEYS);
-			pstmtPesquisa.setString(1, pesquisa.getInstituto());
-			pstmtPesquisa.setString(2, pesquisa.getData());
-			pstmtPesquisa.setString(3, pesquisa.getLocal());
-			pstmtPesquisa.setInt(4, pesquisa.getIdadeMedia());
-			pstmtPesquisa.setString(5, pesquisa.getTipoPesquisa());
-			pstmtPesquisa.setString(6, pesquisa.getFormatoPesquisa());
+	public void salvar(CandidatoXPesquisa cxp) throws SQLException {
+			String sql = "insert into candidato_pesquisa (candidato_id, pesquisa_id, voto) value (?, ?, ?)";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, cxp.getCandidato().getId());
+			pstmt.setInt(2, cxp.getPesquisa().getId());
+			pstmt.setInt(3, cxp.getVotos());
+			pstmt.execute();
 			
-			int keyP = pstmtPesquisa.executeUpdate();
-			
-			if (keyC > 0 && keyP > 0) {
-				ResultSet rsC = pstmtCandidato.getGeneratedKeys();
-				rsC.next();
-				int idC = rsC.getInt(1);
-				
-				ResultSet rsP = pstmtPesquisa.getGeneratedKeys();
-				rsP.next();
-				int idP = rsP.getInt(1);
-				
-				String sql = "insert into candidato_pesquisa (votos, candidato_id, pesquisa_id) values (?, ?, ?)";
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, cxp.getVotos());
-				pstmt.setInt(2, idC);
-				pstmt.setInt(3, idP);
-				pstmt.execute();
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 	
 

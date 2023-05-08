@@ -36,9 +36,6 @@ public class CadastroPesquisaUI extends JInternalFrame {
 	private JTextField txtFormatoPesquisa;
 	private Pesquisa pesquisa;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -52,9 +49,6 @@ public class CadastroPesquisaUI extends JInternalFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public CadastroPesquisaUI() {
 		setTitle("Cadastro de Pesquisa");
 		setBounds(100, 100, 692, 420);
@@ -78,7 +72,6 @@ public class CadastroPesquisaUI extends JInternalFrame {
 					JOptionPane.showMessageDialog(null, "Pesquisa salva com sucesso!");
 					dispose();
 				} catch (Exception esp) {
-					// esp = 'excessão' 'salvando' 'pesquisa'
 					JOptionPane.showMessageDialog(null, "Erro ao salvar pesquisa!");
 				}
 			}

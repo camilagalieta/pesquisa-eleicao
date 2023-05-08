@@ -27,7 +27,7 @@ public class PesquisaDao {
 	public void salvar(Pesquisa pesquisa) {
 		
 		try {
-			String sql = "insert into pesquisa (id, instituto, data_pesquisa, local_pesquisa, media_idade, tipo_pesquisa, formato_pesquisa) values (?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into pesquisa (id, instituto, data, local, idadeMedia, tipoPesquisa, formatoPesquisa) values (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, pesquisa.getId());
 			pstmt.setString(2, pesquisa.getInstituto());
@@ -46,11 +46,11 @@ public class PesquisaDao {
 	public void atualizar(Pesquisa pesquisa) {
 
 		try {
-			String sql = "update pesquisa set id = ?, instituto = ?, data = ?, local = ?, idadeMedia = ?, tipoPesquisa = ?, formatoPesquisa = ? where id = ?";
+			String sql = "update pesquisa set id = ?, instituto = ?, data = ?, local = ?, idadeMedia = ?, tipoPesquisa= ?, formatoPesquisa = ? where id = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, pesquisa.getId());
 			pstmt.setString(2, pesquisa.getInstituto());
-			pstmt.setDate(3, java.sql.Date.valueOf(pesquisa.getData()));
+			pstmt.setString(3, pesquisa.getData());
 			pstmt.setString(4, pesquisa.getLocal());
 			pstmt.setInt(5, pesquisa.getIdadeMedia());
 			pstmt.setString(6, pesquisa.getTipoPesquisa());
@@ -88,11 +88,11 @@ public class PesquisaDao {
 				Pesquisa p = new Pesquisa();
 				p.setId(rs.getInt("id"));
 				p.setInstituto(rs.getString("instituto"));
-				p.setData(rs.getString("data_pesquisa"));
-				p.setLocal(rs.getString("local_pesquisa"));
-				p.setIdadeMedia(rs.getInt("media_idade"));
-				p.setTipoPesquisa(rs.getString("tipo_pesquisa"));
-				p.setFormatoPesquisa(rs.getString("formato_pesquisa"));
+				p.setData(rs.getString("data"));
+				p.setLocal(rs.getString("local"));
+				p.setIdadeMedia(rs.getInt("idadeMedia"));
+				p.setTipoPesquisa(rs.getString("tipoPesquisa"));
+				p.setFormatoPesquisa(rs.getString("formatoPesquisa"));
 				listaPesquisas.add(p);
 			}
 		} catch (SQLException e) {
@@ -100,5 +100,22 @@ public class PesquisaDao {
 		}
 		
 		return listaPesquisas;
+	}
+	
+	public Pesquisa pesquisaById(Integer id) throws SQLException {
+		String sql = "select * from pesquisa where id = ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, id);
+		ResultSet rs = pstmt.executeQuery();
+		rs.next();
+		Pesquisa p = new Pesquisa();
+		p.setId(rs.getInt("id"));
+		p.setInstituto(rs.getString("instituto"));
+		p.setData(rs.getString("data"));
+		p.setLocal(rs.getString("local"));
+		p.setIdadeMedia(rs.getInt("idadeMedia"));
+		p.setTipoPesquisa(rs.getString("tipoPesquisa"));
+		p.setFormatoPesquisa(rs.getString("formatoPesquisa"));
+		return p;
 	}
 }

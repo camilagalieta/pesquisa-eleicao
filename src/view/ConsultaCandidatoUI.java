@@ -58,7 +58,6 @@ public class ConsultaCandidatoUI extends JInternalFrame {
 					jtCandidatos.setModel(new CandidatoTableModel(new CandidatoController().listar()));
 					
 				} catch (Exception eec) {
-					// eecc = 'e'xcessão 'e'xcluindo 'c'andidato
 					JOptionPane.showMessageDialog(null, "Erro ao excluir candidato!");
 				}
 			}
@@ -74,8 +73,6 @@ public class ConsultaCandidatoUI extends JInternalFrame {
 					cadCandidatoUI.setVisible(true);
 					getParent().add(cadCandidatoUI, 0);
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				} 
 				
 			}

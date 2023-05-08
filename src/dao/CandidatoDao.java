@@ -93,9 +93,19 @@ public class CandidatoDao {
 		
 		return listaCandidatos;
 	}
-
-
-
-
-
+	
+	public Candidato candidatoById(Integer id) throws SQLException {
+		String sql = "select * from candidato where id = ?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, id);
+		ResultSet rs = pstmt.executeQuery();
+		rs.next();
+		Candidato c = new Candidato();
+		c.setId(rs.getInt("id"));
+		c.setNome(rs.getString("nome"));
+		c.setPartido(rs.getString("partido"));
+		c.setFichaLimpa(rs.getBoolean("ficha_limpa"));
+		
+		return c;
+	}
 }

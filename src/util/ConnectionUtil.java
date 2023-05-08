@@ -14,11 +14,6 @@ public class ConnectionUtil {
             con = DriverManager.getConnection(url,"root","root");
             con.setAutoCommit(true);
             return con;
-//        } catch ( ClassNotFoundException e){
-//            e.printStackTrace();
-//        } catch ( SQLException se){
-//            se.printStackTrace();
-//        }
 	    } catch ( Exception se){
 	        se.printStackTrace();
 	        return null;
